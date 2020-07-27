@@ -30,7 +30,8 @@ Base.prepare(engine, reflect=True)
 #Save references to each table
 Authors = Base.classes.authors
 Books = Base.classes.books
-Hometowns = Base.classes.hometowns
+Years = Base.classes.years
+# Bardata = Base.classes.bardata
 
 #Create  session from Python to the DB
 session = Session(engine)
@@ -38,59 +39,166 @@ session = Session(engine)
 #Flask Routes
 #######################################################################
 
+#Template routes
 @app.route("/")
 def home():
     #Template for home page
     return render_template("index.html")
-    
-    # """List all available api routes."""
-    # return (
-    #     f"Available Routes:<br/>"
-    #     f"/api/v1.0/authors<br/>"
-    #     f"/api/v1.0/books<br/>"
-    # #     f"/api/v1.0/hometowns<br/>"
-    # )
 
+@app.route("/plots")
+def plots():
+    #Template for home page
+    return render_template("Plots.html")
 
-@app.route("/years")
-def years():
+@app.route("/booklist")
+def booklist():
+    #Template for home page
+    return render_template("books.html")
 
-    #Select data to be used
-    data = [Books.year_read]
-    
-    #SQL query
-    years = session.query(*data)\
-            .filter(Books.year_read != "0")\
-            .order_by(Books.year_read)\
-            .distinct().all()
-
-    #Return JSON format
-    return jsonify(list(years))
-
-
-@app.route("/treemap")
-def treemap():
+#Bar chart year routes
+@app.route("/bar/2011")
+def bar_2011():
 
     #Select data to be used
-    data = [Books.book_title, Books.series_name, Books.author_name, Books.language, Books.fiction_non, Books.genre, Books.year_read]
-
-    #SQL query
-    books_treemap = session.query(*data).all()
+    data = [Books.book_title, Books.genre, Books.year_read]
     
-    #Create an book dictionary from the row data and append to a list
-    for data in books_treemap:
-        book_dict = {}
-        book_dict["book_title"] = book_title
-        book_dict["series_name"] = series_name
-        book_dict["author_name"] = author_name
-        book_dict["language"] = language
-        book_dict["fiction_non"] = fiction_non
-        book_dict["genre"] = genre
-        book_dict["year_read"] = year_read
- 
-    #Return JSON format
-    return jsonify(book_dict)
+    #SQL query
+    year_2011 = session.query(*data)\
+                .filter(Books.year_read == "2011")\
+                .order_by(Books.year_read)\
+                .distinct().all()
 
+    #Return JSON format
+    return jsonify(list(year_2011))
+
+@app.route("/bar/2012")
+def bar_2012():
+
+    #Select data to be used
+    data = [Books.book_title, Books.genre, Books.year_read]
+    
+    #SQL query
+    year_2012 = session.query(*data)\
+                .filter(Books.year_read == "2012")\
+                .order_by(Books.year_read)\
+                .distinct().all()
+
+    #Return JSON format
+    return jsonify(list(year_2012))
+
+@app.route("/bar/2013")
+def bar_2013():
+
+    #Select data to be used
+    data = [Books.book_title, Books.genre, Books.year_read]
+    
+    #SQL query
+    year_2013 = session.query(*data)\
+                .filter(Books.year_read == "2013")\
+                .order_by(Books.year_read)\
+                .distinct().all()
+
+    #Return JSON format
+    return jsonify(list(year_2013))
+
+@app.route("/bar/2014")
+def bar_2014():
+
+    #Select data to be used
+    data = [Books.book_title, Books.genre, Books.year_read]
+    
+    #SQL query
+    year_2014 = session.query(*data)\
+                .filter(Books.year_read == "2014")\
+                .order_by(Books.year_read)\
+                .distinct().all()
+
+    #Return JSON format
+    return jsonify(list(year_2014))
+
+@app.route("/bar/2015")
+def bar_2015():
+
+    #Select data to be used
+    data = [Books.book_title, Books.genre, Books.year_read]
+    
+    #SQL query
+    year_2015 = session.query(*data)\
+                .filter(Books.year_read == "2015")\
+                .order_by(Books.year_read)\
+                .distinct().all()
+
+    #Return JSON format
+    return jsonify(list(year_2015))
+
+@app.route("/bar/2016")
+def bar_2016():
+
+    #Select data to be used
+    data = [Books.book_title, Books.genre, Books.year_read]
+    
+    #SQL query
+    year_2016 = session.query(*data)\
+                .filter(Books.year_read == "2016")\
+                .order_by(Books.year_read)\
+                .distinct().all()
+
+    #Return JSON format
+    return jsonify(list(year_2016))
+
+@app.route("/bar/2017")
+def bar_2017():
+
+    #Select data to be used
+    data = [Books.book_title, Books.genre, Books.year_read]
+    
+    #SQL query
+    year_2017 = session.query(*data)\
+                .filter(Books.year_read == "2017")\
+                .order_by(Books.year_read)\
+                .distinct().all()
+
+    #Return JSON format
+    return jsonify(list(year_2017))
+
+@app.route("/bar/2018")
+def bar_2018():
+
+    #Select data to be used
+    data = [Books.book_title, Books.genre, Books.year_read]
+    
+    #SQL query
+    year_2018 = session.query(*data)\
+                .filter(Books.year_read == "2018")\
+                .order_by(Books.year_read)\
+                .distinct().all()
+
+    #Return JSON format
+    return jsonify(list(year_2018))
+
+@app.route("/bar/2019")
+def bar_2019():
+
+    #Select data to be used
+    data = [Books.book_title, Books.genre, Books.year_read]
+    
+    #SQL query
+    year_2019 = session.query(*data)\
+                .filter(Books.year_read == "2019")\
+                .order_by(Books.year_read)\
+                .distinct().all()
+
+    #Return JSON format
+    return jsonify(list(year_2019))
+
+#Sunburst chart route
+@app.route("/sunburst")
+def sunburst():
+
+    #Tuples data
+    return render_template("final.json")
+
+#Sub plots route
 @app.route("/scatter")
 def scatter():
     
@@ -105,75 +213,33 @@ def scatter():
 
     #Return JSON format
     return jsonify(books_scatter)
+
+#Year list route
+@app.route("/years")
+def years():
     
-#     #Author query
-#     authors = session.query(Authors.author_id, Authors.author_name).all()
+    #Select data to be used
+    data = [Years.years]
 
-#     session.close()
+    #SQL query
+    year_list = session.query(*data).all()
 
-#     #Create an author dictionary from the row data and append to a list
-#     author_data = []
-#     for author_id, author_name in authors:
-#         author_dict = {}
-#         author_dict["author_id"] = author_id
-#         author_dict["author_name"] = author_name
-#         author_data.append(author_dict)
+    #Return JSON format
+    return jsonify(year_list)
 
-#     #Return JSON format
-#     return jsonify(author_data)
-
-
-# @app.route("/api/v1.0/books")
-# def books(): 
-
-#     # Create  session from Python to the DB
-#     session = Session(engine)
-
-#     #Book query
-#     books = session.query(Books.book_id,Books.book_title, Books.series_name, Books.author_name, Books.language, Books.fiction_non, Books.genre, Books.number_of_pages, Books.year_read).all()
-
-#     session.close()
-
-#     #Create an book dictionary from the row data and append to a list
-#     book_data = []
-#     for book_id,book_title,series_name,author_name,language,fiction_non,genre,number_of_pages,year_read in books:
-#         book_dict = {}
-#         book_dict["book_id"] = book_id
-#         book_dict["book_title"] = book_title
-#         book_dict["series_name"] = series_name
-#         book_dict["author_name"] = author_name
-#         book_dict["language"] = language
-#         book_dict["fiction_non"] = fiction_non
-#         book_dict["genre"] = genre
-#         book_dict["number_of_pages"] = number_of_pages
-#         book_dict["year_read"] = year_read
-#         book_data.append(book_dict)
+#Year list route
+@app.route("/genres")
+def genres():
     
-#     #Return JSON format
-#     return jsonify(book_data)
+    #Select data to be used
+    data = [Books.genre]
 
+    #SQL query
+    genre_list = session.query(*data).distinct().all()
 
-# @app.route("/api/v1.0/hometowns")
-# def hometowns():
-#     # Create  session from Python to the DB
-#     session = Session(engine)
+    #Return JSON format
+    return jsonify(genre_list)
 
-#     #Hometown query
-#     hometowns = session.query(Hometowns.author_name, Hometowns.hometown, Hometowns.books_written).all()
-
-#     session.close()
-
-#     #Create an author dictionary from the row data and append to a list
-#     hometown_data = []
-#     for author_name, hometown, books_written in hometowns:
-#         hometown_dict = {}
-#         hometown_dict["author_name"] = author_name
-#         hometown_dict["hometown"] = hometown
-#         hometown_dict["books_written"] = books_written
-#         hometown_data.append(hometown_dict)
-
-#     #Return JSON format
-#     return jsonify(hometown_data)
 
 if __name__ == '__main__':
     app.run(debug=True)

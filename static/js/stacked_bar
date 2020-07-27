@@ -1,0 +1,44 @@
+//Pull unique year data from FLASK API
+d3.json(`http://127.0.0.1:5000/years`).then(data => {
+console.log(data)
+  //Create dropdown
+  var dropdown = d3.select("#selDate")
+
+  //Pull year values 
+  data.forEach(entry => {
+
+      // Append Date Into Dropdown
+      dropdown.append('option').attr('value', entry).text(entry).property('value')
+  })
+
+// Pull unique genre data from FLASK API
+d3.json(`http://127.0.0.1:5000/genres`).then(data => {
+  var genres = data.map(d=>d[0])
+  console.log(genres)
+
+    // Pull 2011 book data
+    d3.json(`http://127.0.0.1:5000/bar/2011`).then(data => {
+        var titles = data.map(d=>d[0])
+        console.log(titles)
+
+var trace1 = {
+  x: genres,
+  y: titles,
+  name: 'SF Zoo',
+  type: 'bar'
+};
+
+// var trace2 = {
+//   x: genres,
+//   y: [12, 18, 29],
+//   name: 'LA Zoo',
+//   type: 'bar'
+// };
+
+var data = [trace1];
+
+// var layout = {barmode: 'stack'};
+
+Plotly.newPlot('bar', data);
+
+})})});
